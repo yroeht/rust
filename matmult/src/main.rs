@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 fn read_matrix(filename: &String) -> (usize, Vec<Vec<f32>>) {
     let matrix1_str = std::fs::read_to_string(filename)
         .expect("Trying to read from matrix csv");
@@ -46,6 +48,7 @@ fn main() {
     println!("matrix2:");
     dump_matrix(&matrix2);
     println!("Let's multiply some matrices!");
+    let time_start = Instant::now();
 
     let mut res: Vec<Vec<f32>> = Vec::new(); // dim1_2 * dim2_1
     for i in 0..dim1_2 {
@@ -59,5 +62,8 @@ fn main() {
         }
         res.push(line);
     }
+    let time_duration = time_start.elapsed();
+    println!("Calculated in {:?}", time_duration);
     dump_matrix(&res);
+    println!("Calculated in {:?}", time_duration);
 }
