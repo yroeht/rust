@@ -30,6 +30,18 @@ fn dump_matrix(matrix: &Vec<Vec<f32>>) {
     }
 }
 
+fn transpose_matrix(matrix: &Vec<Vec<f32>>) -> Vec<Vec<f32>> {
+    let mut res: Vec<Vec<f32>> = Vec::new();
+    for i in 0..matrix[0].len() {
+        let mut line: Vec<f32> = Vec::new();
+        for j in 0..matrix.len() {
+            line.push(matrix[j][i]);
+        }
+        res.push(line);
+    }
+    res
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 3 {
@@ -47,6 +59,9 @@ fn main() {
     dump_matrix(&matrix1);
     println!("matrix2:");
     dump_matrix(&matrix2);
+
+    let matrix2 = transpose_matrix(&matrix2);
+
     println!("Let's multiply some matrices!");
     let time_start = Instant::now();
 
@@ -56,7 +71,7 @@ fn main() {
         for j in 0..dim2_1 {
             let mut val = 0f32;
             for x in 0..dim1_1 {
-                val += matrix1[i][x] * matrix2[x][j];
+                val += matrix1[i][x] * matrix2[j][x];
             }
             line.push(val);
         }
