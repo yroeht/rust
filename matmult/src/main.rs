@@ -1,7 +1,7 @@
-fn read_matrix(filename: &String) -> (usize, Vec<Vec<i32>>) {
+fn read_matrix(filename: &String) -> (usize, Vec<Vec<f32>>) {
     let matrix1_str = std::fs::read_to_string(filename)
         .expect("Trying to read from matrix csv");
-    let mut ret: Vec<Vec<i32>> = Vec::new();
+    let mut ret: Vec<Vec<f32>> = Vec::new();
 
     let mut dim = 0;
     for line in matrix1_str.lines() {
@@ -10,7 +10,7 @@ fn read_matrix(filename: &String) -> (usize, Vec<Vec<i32>>) {
         }
         let mut line_vals = Vec::new();
         for val in line.split(",").collect::<Vec<&str>>().iter() {
-            line_vals.push(val.parse::<i32>().unwrap());
+            line_vals.push(val.parse::<f32>().unwrap());
         }
         if dim != 0 && dim != line_vals.len() {
             panic!("dimensions mismatch");
@@ -21,7 +21,7 @@ fn read_matrix(filename: &String) -> (usize, Vec<Vec<i32>>) {
     (dim, ret)
 }
 
-fn dump_matrix(matrix: &Vec<Vec<i32>>) {
+fn dump_matrix(matrix: &Vec<Vec<f32>>) {
     for line in matrix {
         let strs: Vec<String> = line.iter().map(|i| i.to_string()).collect();
         println!("{}", strs.join(","));
@@ -47,11 +47,11 @@ fn main() {
     dump_matrix(&matrix2);
     println!("Let's multiply some matrices!");
 
-    let mut res: Vec<Vec<i32>> = Vec::new(); // dim1_2 * dim2_1
+    let mut res: Vec<Vec<f32>> = Vec::new(); // dim1_2 * dim2_1
     for i in 0..dim1_2 {
-        let mut line: Vec<i32> = Vec::new();
+        let mut line: Vec<f32> = Vec::new();
         for j in 0..dim2_1 {
-            let mut val = 0i32;
+            let mut val = 0f32;
             for x in 0..dim1_1 {
                 val += matrix1[i][x] * matrix2[x][j];
             }
