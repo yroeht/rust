@@ -54,6 +54,11 @@ pub fn multiply(matrix1 :String, matrix2 :String) {
     println!("matrix2:");
     dump_matrix(&matrix2);
 
+    if dim1_1 != dim2_2 {
+        panic!("dimension mismatch ({}, {}), ({}, {}) must be of the form (k, m), (n, k).",
+            dim1_1, dim1_2, dim2_1, dim2_2);
+    }
+
     let matrix2 = transpose_matrix(&matrix2);
 
     println!("Let's multiply some matrices!");
