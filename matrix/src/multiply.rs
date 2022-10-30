@@ -7,11 +7,11 @@ fn read_matrix(filename: &String) -> (usize, Vec<Vec<f32>>) {
 
     let mut dim = 0;
     for line in matrix1_str.lines() {
-        if line.len() == 0 {
+        if line.is_empty() {
             continue;
         }
         let mut line_vals = Vec::new();
-        for val in line.split(",").collect::<Vec<&str>>().iter() {
+        for val in line.split(',').collect::<Vec<&str>>().iter() {
             line_vals.push(val.parse::<f32>().unwrap());
         }
         if dim != 0 && dim != line_vals.len() {
@@ -34,8 +34,8 @@ fn transpose_matrix(matrix: &Vec<Vec<f32>>) -> Vec<Vec<f32>> {
     let mut res: Vec<Vec<f32>> = Vec::new();
     for i in 0..matrix[0].len() {
         let mut line: Vec<f32> = Vec::new();
-        for j in 0..matrix.len() {
-            line.push(matrix[j][i]);
+        for vals in matrix {
+            line.push(vals[i]);
         }
         res.push(line);
     }
@@ -57,12 +57,12 @@ pub fn multiply(matrix1 :String, matrix2 :String) {
     let time_start = Instant::now();
 
     let mut res: Vec<Vec<f32>> = Vec::new(); // dim1_2 * dim2_1
-    for i in 0..dim1_2 {
+    for m1_line in &matrix1 {
         let mut line: Vec<f32> = Vec::new();
-        for j in 0..dim2_1 {
+        for m2_line in &matrix2 {
             let mut val = 0f32;
             for x in 0..dim1_1 {
-                val += matrix1[i][x] * matrix2[j][x];
+                val += m1_line[x] * m2_line[x];
             }
             line.push(val);
         }
