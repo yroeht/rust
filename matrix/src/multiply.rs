@@ -47,13 +47,6 @@ pub fn multiply(matrix1 :String, matrix2 :String) {
     let dim1_2 = matrix1.len();
     let dim2_2 = matrix2.len();
 
-    println!("Loaded matrices of dimensions ({}, {}), ({}, {}).",
-        dim1_1, dim1_2, dim2_1, dim2_2);
-    println!("matrix1:");
-    dump_matrix(&matrix1);
-    println!("matrix2:");
-    dump_matrix(&matrix2);
-
     if dim1_1 != dim2_2 {
         panic!("dimension mismatch ({}, {}), ({}, {}) must be of the form (k, m), (n, k).",
             dim1_1, dim1_2, dim2_1, dim2_2);
@@ -61,7 +54,6 @@ pub fn multiply(matrix1 :String, matrix2 :String) {
 
     let matrix2 = transpose_matrix(&matrix2);
 
-    println!("Let's multiply some matrices!");
     let time_start = Instant::now();
 
     let mut res: Vec<Vec<f32>> = Vec::new(); // dim1_2 * dim2_1
@@ -77,7 +69,6 @@ pub fn multiply(matrix1 :String, matrix2 :String) {
         res.push(line);
     }
     let time_duration = time_start.elapsed();
-    println!("Calculated in {:?}", time_duration);
     dump_matrix(&res);
     println!("Calculated in {:?}", time_duration);
 }
